@@ -1,4 +1,3 @@
-
 #include "GameOfLife.h"
 
 GameOfLife::GameOfLife() : window(VideoMode(Grid::getWindowWidth(), Grid::getWindowHeight()), "Jeu de la vie") {

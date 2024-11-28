@@ -1,11 +1,11 @@
 #ifndef GRID_H
 #define GRID_H
+
 #include "Cell.h"
 #include <vector>
 #include "SFML/Graphics/RenderWindow.hpp"
 
 using namespace std;
-using namespace sf;
 
 class Grid {
 private:

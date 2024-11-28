@@ -1,9 +1,5 @@
-#include <SFML/Graphics.hpp>
 #include <iostream>
 #include "GameOfLife.h"
-
-using namespace std;
-using namespace sf;
 
 
 int main() {

@@ -9,6 +9,10 @@ FETCHCONTENT_MAKEAVAILABLE(SFML)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Projet main.cpp)
+add_executable(Projet main.cpp
+        Cell.cpp
+        Grid.cpp
+        GameOfLife.cpp
+        GameOfLife.h)
 
 target_link_libraries(Projet sfml-graphics sfml-window sfml-system)

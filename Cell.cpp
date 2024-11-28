@@ -4,7 +4,7 @@
 using namespace sf;
 
 Cell::Cell() : alive(false) {
-    shape.setSize(Vector2f(9.0f, 9.0f));
+    shape.setSize(Vector2f(9, 9));
     shape.setFillColor(Color::White);
 }
 
