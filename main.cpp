@@ -2,6 +2,7 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
+#include <iostream>
 
 using namespace std;
 using namespace sf;
@@ -49,7 +50,7 @@ private:
 
                 int newX = x + i;
                 int newY = y + j;
-w
+
                 if(newX >= 0 && newX < width && newY >= 0 && newY < height) {
                     if(cells[newX][newY].isAlive()) count++;
                 }
@@ -157,4 +158,8 @@ int main() {
     GameOfLife game;
     game.run();
     return 0;
+}
+
+int Chogath {
+    cout << "Chogath" << endl;
 }
