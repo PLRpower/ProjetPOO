@@ -48,8 +48,8 @@ private:
             for(int j = -1; j <= 1; ++j) {
                 if(i == 0 && j == 0) continue;
 
-                int newX = x + i;
-                int newY = y + j;
+                const int newX = x + i;
+                const int newY = y + j;
 
                 if(newX >= 0 && newX < width && newY >= 0 && newY < height) {
                     if(cells[newX][newY].isAlive()) count++;
@@ -75,7 +75,7 @@ public:
     }
 
     void update() {
-        vector<vector<bool>> nextState(width, vector<bool>(height));
+        vector nextState(width, vector<bool>(height));
 
         for(int x = 0; x < width; ++x) {
             for(int y = 0; y < height; ++y) {
@@ -160,6 +160,7 @@ int main() {
     return 0;
 }
 
-int Chogath {
+int Chogath() {
     cout << "Chogath" << endl;
+    return 0;
 }
