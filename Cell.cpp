@@ -1,25 +1,13 @@
 #include "Cell.h"
-#include "SFML/Graphics/RectangleShape.hpp"
 
-using namespace sf;
-
-Cell::Cell() : alive(false) {
-    shape.setSize(Vector2f(9, 9));
-    shape.setFillColor(Color::White);
-}
+Cell::Cell() : alive(false), fixed(false) {}
 
 void Cell::setAlive(const bool status) {
-    alive = status;
+    if(!fixed) {
+        alive = status;
+    }
 }
 
 bool Cell::isAlive() const {
     return alive;
-}
-
-void Cell::setPosition(float x, float y) {
-    shape.setPosition(x, y);
-}
-
-const RectangleShape& Cell::getShape() const {
-    return shape;
 }

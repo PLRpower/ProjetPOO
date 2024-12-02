@@ -15,10 +15,10 @@ add_executable(Projet main.cpp
         Cell.h
         Grid.cpp
         Grid.h
-        GameOfLife.h
-        GameOfLife.cpp
-        ReadFile.cpp
-        ReadFile.h
+        GraphicDisplay.cpp
+        GraphicDisplay.h
+        File.cpp
+        File.h
 )
 
 target_link_libraries(Projet sfml-graphics sfml-window sfml-system)

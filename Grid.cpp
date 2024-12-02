@@ -1,43 +1,48 @@
 #include "Grid.h"
 
-int Grid::countNeighbors(int x, int y) const {
-    int count = 0;
-    for(int i = -1; i <= 1; ++i) {
-        for(int j = -1; j <= 1; ++j) {
-            if(i == 0 && j == 0) continue;
+#include <ctime>
 
-            const int newX = x + i;
-            const int newY = y + j;
-
-            if(newX >= 0 && newX < width && newY >= 0 && newY < height) {
-                if(cells[newX][newY].isAlive()) count++;
-            }
-        }
-    }
-    return count;
-}
-
-Grid::Grid() : cells(width, vector<Cell>(height)) {
-    initialize();
-}
-
-void Grid::initialize() {
+Grid::Grid(const int width, const int height) : width(width), height(height), cells(width, vector<Cell>(height)) {
     srand(time(0));
     for(int x = 0; x < width; ++x) {
         for(int y = 0; y < height; ++y) {
             cells[x][y].setAlive(rand() % 2 == 1);
-            cells[x][y].setPosition(x * cellSize, y * cellSize);
         }
     }
 }
 
+int Grid::countNeighbors(const int x, const int y) const {
+    int count = 0;
+    for(int i = -1; i <= 1; ++i) {
+        for(int j = -1; j <= 1; ++j) {
+            if(i == 0 && j == 0) {
+                continue;  // Ignorer la cellule actuelle (centre)
+            }
+
+            int xNeighbor = x + i;
+            int yNeighbor = y + j;
+
+            if(isToric) {
+                xNeighbor = (xNeighbor + width) % width;
+                yNeighbor = (yNeighbor + height) % height;
+            }
+
+            if(xNeighbor >= 0 && xNeighbor < width && yNeighbor >= 0 && yNeighbor < height) {
+                count += cells[xNeighbor][yNeighbor].isAlive();
+            }
+        }
+    }
+
+    return count;
+}
+
 void Grid::update() {
     vector nextState(width, vector<bool>(height));
-
+    #pragma omp parallel for collapse(2)
     for(int x = 0; x < width; ++x) {
         for(int y = 0; y < height; ++y) {
-            int neighbors = countNeighbors(x, y);
-            bool currentlyAlive = cells[x][y].isAlive();
+            const int neighbors = countNeighbors(x, y);
+            const bool currentlyAlive = cells[x][y].isAlive();
 
             if(currentlyAlive) {
                 nextState[x][y] = (neighbors == 2 || neighbors == 3);
@@ -47,7 +52,6 @@ void Grid::update() {
         }
     }
 
-    // Apply new state
     for(int x = 0; x < width; ++x) {
         for(int y = 0; y < height; ++y) {
             cells[x][y].setAlive(nextState[x][y]);
@@ -55,13 +59,10 @@ void Grid::update() {
     }
 }
 
-void Grid::render(RenderWindow& window) const {
-    for(int x = 0; x < width; ++x) {
-        for(int y = 0; y < height; ++y) {
-            if(cells[x][y].isAlive()) {
-                window.draw(cells[x][y].getShape());
-            }
-        }
-    }
+bool Grid::isAlive(const int x, const int y) const {
+    return cells[x][y].isAlive();
 }
 
+void Grid::setAlive(const int x, const int y, const bool alive) {
+    cells[x][y].setAlive(alive);
+}

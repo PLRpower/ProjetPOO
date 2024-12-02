@@ -3,32 +3,26 @@
 
 #include "Cell.h"
 #include <vector>
-#include "SFML/Graphics/RenderWindow.hpp"
 
 using namespace std;
 
 class Grid {
 private:
-    static constexpr int cellSize = 10;
-    static constexpr int width = 80;
-    static constexpr int height = 80;
+    int width;
+    int height;
     vector<vector<Cell>> cells;
-
+    bool isToric = true;
     int countNeighbors(int x, int y) const;
 
 public:
-    Grid();
-
-    void initialize();
+    Grid(int width, int height);
 
     void update();
-
-    void render(RenderWindow& window) const;
-
-    static int getWindowWidth() { return width * cellSize; }
-    static int getWindowHeight() { return height * cellSize; }
+    int getWidth() const { return width; }
+    int getHeight() const { return height; }
+    bool isAlive(int x, int y) const;
+    void setAlive(int x, int y, bool alive);
 };
-
 
 
 
