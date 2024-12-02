@@ -14,7 +14,7 @@ int main() {
     int gridHeight;
     string filename;
 
-    File file = File("C:/Users/pault/CLionProjects/ProjetPOO/input.txt");
+    File file = File("C:/Users/nicol/CLionProjects/ProjetPOO/input.txt");
     Grid data = file.readFile();
 
     cout << "Choisissez la méthode de génération pour grille initiale :" << endl;
