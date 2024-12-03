@@ -7,7 +7,7 @@ classDiagram
     class Grid {
         -int width
         -int height
-        -vector<vector<Cell>> cells
+        - vector<vector<Cell>> cells
         -bool isToric
         -int countNeighbors(int x, int y)
         +Grid(int width, int height)

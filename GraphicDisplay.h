@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <ctime>
+#include <iostream>
+
 #include "Grid.h"
 
 using namespace std;
@@ -17,15 +19,13 @@ public:
 
     void renderGrid(RenderWindow &window, const Grid &grid) const {
         window.clear();
-        RectangleShape cell(Vector2f(cellSize - 1, cellSize - 1));
+        RectangleShape shape(Vector2f(cellSize - 1, cellSize - 1));
 
-        // Rendu de la grille
-        for (int x = 0; x < grid.getWidth(); ++x) {
-            for (int y = 0; y < grid.getHeight(); ++y) {
-                if (grid.isAlive(x, y)) {
-                    cell.setPosition(x * cellSize, y * cellSize);
-                    window.draw(cell);
-                }
+        for (int x = 0; x < grid.getHeight(); ++x) {
+            for (int y = 0; y < grid.getWidth(); ++y) {
+                shape.setPosition(y * cellSize, x * cellSize);
+                shape.setFillColor(grid.getCell(x, y).isAlive() ? Color::White : Color::Black);
+                window.draw(shape);
             }
         }
         window.display();
