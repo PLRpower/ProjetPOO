@@ -1,38 +1,19 @@
 ```mermaid 
-flowchart TD
-User((User))
+graph LR
+U((Utilisateur))
 
-    usecase1[Generate Grid]
-    usecase2[Load Grid from File]
-    usecase3[View Game]
-    usecase4[Play Game]
-    usecase5[Save Grid State]
-    usecase6[Choose Display Mode]
-
-    User --> usecase1
-    User --> usecase2
-    User --> usecase3
-    User --> usecase4
-    User --> usecase5
-    User --> usecase6
-
-    usecase3 --> usecase6
-    usecase6 --> Console
-    usecase6 --> Graphic
-
-    subgraph Game Modes
-        Console
-        Graphic
-    end
-
-    subgraph Grid Generation
-        usecase1
-        usecase2
-    end
-
-    subgraph Grid Management
-        usecase4 --> Update
-        usecase4 --> CalculateNeighbors
-        usecase5
-    end
-```
+    U --> C[Choisir la méthode de génération]
+    U --> A[Choisir le mode d'affichage]
+    U --> F[Fermer le jeu]
+    
+    C --> G1[Générer grille aléatoire]
+    C --> G2[Générer grille à la souris]
+    C --> G3[Générer grille depuis un fichier]
+    G3 --> P[Définir les paramètres de la grille]
+    
+    A --> M1[Afficher le mode graphique]
+    A --> M2[Afficher le mode console]
+    
+    M1 --> S[Simuler l'évolution des cellules]
+    M2 --> S
+``````
