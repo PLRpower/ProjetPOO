@@ -19,6 +19,7 @@
             GraphicDisplay.h
             File.cpp
             File.h
+            Grid.h
     )
 
     target_link_libraries(Projet sfml-graphics sfml-window sfml-system)

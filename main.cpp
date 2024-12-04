@@ -10,32 +10,18 @@ constexpr int cellSize = 50;
 int main() {
     int generation;
     int mode;
-    int gridWidth;
-    int gridHeight;
-    string filename;
-
-    File file = File("C:/Users/nicol/CLionProjects/ProjetPOO/input.txt");
-    Grid data = file.readFile();
+    File file = File("C:/Users/pault/CLionProjects/ProjetPOO/input.txt");
 
     cout << "Choisissez la méthode de génération pour grille initiale :" << endl;
     cout << "1. Générer aléatoirement" << endl;
     cout << "2. Générer à partir d'un fichier" << endl;
     cin >> generation;
 
-    switch (generation) {
-        case 1:
-            cout << "Entrez la largeur de la grille :" << endl;
-        cin >> gridWidth;
-        cout << "Entrez la hauteur de la grille :" << endl;
-        cin >> gridHeight;
-        break;
-        case 2:
-            cout << "Entrez le nom du fichier :" << endl;
-        cin >> filename;
-        break;
-        default:
-            cerr << "Choix invalide" << endl;
-        return 1;
+    Grid grid;
+    if (generation == 1) {
+        grid = Grid(10, 10);
+    } else {
+        grid = file.readFile();
     }
 
     cout << "Choisissez le mode de jeu :" << endl;
@@ -44,8 +30,7 @@ int main() {
     cin >> mode;
 
     GraphicDisplay graphicDisplay = GraphicDisplay();
-    RenderWindow window(VideoMode(gridWidth * cellSize, gridHeight * cellSize), "Game of Life");
-    Grid grid = Grid(gridWidth, gridHeight);
+    RenderWindow window(VideoMode(grid.getWidth() * cellSize, grid.getHeight() * cellSize), "Game of Life");
 
     while (window.isOpen()) {
         Event event;
@@ -56,7 +41,7 @@ int main() {
 
         graphicDisplay.renderGrid(window, grid);
 
-        sleep(milliseconds(100));
+        sleep(milliseconds(1));
 
         grid.update();
     }
