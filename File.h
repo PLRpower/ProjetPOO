@@ -13,7 +13,7 @@ private:
 public:
     explicit File(const std::string& filename) : filename(filename) {}
 
-    Grid readFile() const {
+    Grid getGrid() const {
         std::ifstream file(filename);
         if (!file.is_open()) {
             throw std::runtime_error("Impossible d'ouvrir le fichier : " + filename);

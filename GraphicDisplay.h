@@ -3,21 +3,22 @@
 
 #include <SFML/Graphics.hpp>
 #include <ctime>
-#include <iostream>
 
+#include "Display.h"
 #include "Grid.h"
 
 using namespace std;
 using namespace sf;
 
-class GraphicDisplay {
+class GraphicDisplay final : public Display {
 private:
     const int cellSize = 50;
+    RenderWindow& window;
 
 public:
-    GraphicDisplay() {}
+    explicit GraphicDisplay(RenderWindow& window) : window(window) {}
 
-    void renderGrid(RenderWindow &window, const Grid &grid) const {
+    void renderGrid(const Grid &grid) override {
         window.clear();
         RectangleShape shape(Vector2f(cellSize - 1, cellSize - 1));
 
@@ -30,6 +31,26 @@ public:
         }
         window.display();
     }
+
+    bool isGraphic() const override {
+        return true;
+    }
+
+    RenderWindow& getWindow() const {
+        return window;
+    }
+
+    bool isRunning() const {
+        Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == Event::Closed) {
+                window.close();
+                return false;
+            }
+        }
+        return window.isOpen();
+    }
+
 };
 
 #endif // GRAPHICDISPLAY_H

@@ -20,6 +20,11 @@
             File.cpp
             File.h
             Grid.h
+            JeuDeLaVie.cpp
+            JeuDeLaVie.h
+            ConsoleDisplay.cpp
+            ConsoleDisplay.h
+            Display.h
     )
 
     target_link_libraries(Projet sfml-graphics sfml-window sfml-system)

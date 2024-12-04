@@ -1,6 +1,4 @@
 #include "Grid.h"
-
-#include <iostream>
 #include <vector>
 
 Grid::Grid(const int width, const int height) : width(width), height(height) {
@@ -22,7 +20,15 @@ void Grid::update() {
         }
     }
 
-    for(auto& cell : cells) {
+    for(Cell& cell : cells) {
         cell.setAlive(cell.getNextState());
     }
+}
+
+Cell& Grid::getCell(const int x, const int y) {
+    return cells[x * width + y];
+}
+
+const Cell& Grid::getCell(const int x, const int y) const {
+    return cells[x * width + y];
 }

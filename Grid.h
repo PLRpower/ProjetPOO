@@ -8,21 +8,21 @@ class Grid {
 private:
     int width, height;
     std::vector<Cell> cells;
-    bool toric = true;
+    bool toric;
 
 public:
     Grid() = default;
     Grid(int width, int height);
 
     void update();
+    Cell& getCell(int x, int y);
+    const Cell& getCell(int x, int y) const;
+
     int getWidth() const { return width; }
     int getHeight() const { return height; }
-    void setToric(const bool toric) { this->toric = toric; }
     bool isToric() const { return toric; }
 
-    Cell& getCell(int x, int y) { return cells[x * width + y]; }
-
-    const Cell& getCell(int x, int y) const { return cells[x * width + y]; }
+    void setToric(const bool toric) { this->toric = toric; }
 };
 
 #endif // GRID_H
