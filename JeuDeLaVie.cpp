@@ -1,11 +1,14 @@
 #include "JeuDeLaVie.h"
+#include <iostream>
+
+#include "AffichageConsole.h"
 
 void JeuDeLaVie::choisirFichier() {
     cout << "Choisissez le fichier d'entrée :" << endl;
-    string filename;
-    cin >> filename;
-    fichier.setInputFile(filename);
-    grille = fichier.getGrid();
+    string nomFichier;
+    cin >> nomFichier;
+    fichier.definirFichierEntree(nomFichier);
+    grille = fichier.obtenirGrille();
 }
 
 void JeuDeLaVie::choisirDelai() {
@@ -32,10 +35,10 @@ void JeuDeLaVie::choisirMode() {
     if (mode == 1) {
         affichage = new AffichageConsole();
     } else {
-        fenetre.create(VideoMode(grille.getWidth() * cellSize, grille.getHeight() * cellSize), "Jeu de la vie");
+        fenetre.create(VideoMode(grille.obtenirLargeur() * cellSize, grille.obtenirHauteur() * cellSize), "Jeu de la vie");
         affichage = new AffichageGraphique();
         AffichageGraphique* graphicDisplay = dynamic_cast<AffichageGraphique*>(affichage);
-        graphicDisplay->setWindow(&fenetre);
+        graphicDisplay->definirFenetre(&fenetre);
     }
 }
 
@@ -43,7 +46,7 @@ void JeuDeLaVie::choisirTorique() {
     cout << "La grille est-elle torique ? (1. Oui, 2. Non)" << endl;
     int torique;
     cin >> torique;
-    grille.setToric(torique == 1);
+    grille.definirTorique(torique == 1);
 }
 
 void JeuDeLaVie::start() {

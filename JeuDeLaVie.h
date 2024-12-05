@@ -1,13 +1,11 @@
 #ifndef JEUDELAVIE_H
 #define JEUDELAVIE_H
 
-
-#include "AffichageConsole.h"
 #include "AffichageGraphique.h"
 #include "Affichage.h"
 #include "Fichier.h"
 #include "Grille.h"
-#include <filesystem>
+#include <unordered_set>
 
 constexpr int cellSize = 50;
 

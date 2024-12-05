@@ -13,13 +13,13 @@ using namespace sf;
 class AffichageGraphique final : public Affichage {
 private:
     const int cellSize = 50;
-    RenderWindow* window;
+    RenderWindow* fenetre;
 
 public:
     explicit AffichageGraphique();
-    void afficherGrille(const Grille &grid) override;
-    void setWindow(RenderWindow* window);
-    RenderWindow* getWindow() const;
+    void afficherGrille(const Grille &grille) override;
+    void definirFenetre(RenderWindow* fenetre);
+    RenderWindow* obtenirFenetre() const;
 };
 
 #endif // GRAPHICDISPLAY_H

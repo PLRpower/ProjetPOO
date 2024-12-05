@@ -1,25 +1,25 @@
 #include "AffichageGraphique.h"
 
-AffichageGraphique::AffichageGraphique(): window(nullptr) {}
+AffichageGraphique::AffichageGraphique(): fenetre(nullptr) {}
 
-void AffichageGraphique::afficherGrille(const Grille &grid) {
-    window->clear();
-    RectangleShape shape(Vector2f(cellSize - 1, cellSize - 1));
+void AffichageGraphique::afficherGrille(const Grille &grille) {
+    fenetre->clear();
+    RectangleShape forme(Vector2f(cellSize - 1, cellSize - 1));
 
-    for (int x = 0; x < grid.getHeight(); ++x) {
-        for (int y = 0; y < grid.getWidth(); ++y) {
-            shape.setPosition(y * cellSize, x * cellSize);
-            shape.setFillColor(grid.obtenirCellule(x, y).isAlive() ? Color::White : Color::Black);
-            window->draw(shape);
+    for (int x = 0; x < grille.obtenirHauteur(); ++x) {
+        for (int y = 0; y < grille.obtenirLargeur(); ++y) {
+            forme.setPosition(y * cellSize, x * cellSize);
+            forme.setFillColor(grille.obtenirCellule(x, y).estEnVie() ? Color::White : Color::Black);
+            fenetre->draw(forme);
         }
     }
-    window->display();
+    fenetre->display();
 }
 
-void AffichageGraphique::setWindow(RenderWindow* window) {
-    this->window = window;
+void AffichageGraphique::definirFenetre(RenderWindow* fenetre) {
+    this->fenetre = fenetre;
 }
 
-RenderWindow* AffichageGraphique::getWindow() const {
-    return window;
+RenderWindow* AffichageGraphique::obtenirFenetre() const {
+    return fenetre;
 }

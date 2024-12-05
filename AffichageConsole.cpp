@@ -1,9 +1,9 @@
 #include "AffichageConsole.h"
 
-void AffichageConsole::afficherGrille(const Grille& grid) {
-    for (int x = 0; x < grid.getHeight(); ++x) {
-        for (int y = 0; y < grid.getWidth(); ++y) {
-            cout << grid.obtenirCellule(x, y).isAlive();
+void AffichageConsole::afficherGrille(const Grille& grille) {
+    for (int x = 0; x < grille.obtenirHauteur(); ++x) {
+        for (int y = 0; y < grille.obtenirLargeur(); ++y) {
+            cout << grille.obtenirCellule(x, y).estEnVie();
         }
         cout << endl;
     }

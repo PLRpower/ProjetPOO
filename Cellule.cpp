@@ -1,28 +1,25 @@
 #include "Cellule.h"
-
-#include <iostream>
-
 #include "Grille.h"
 
-Cellule::Cellule() : alive(false), fixed(false), x(0), y(0) {}
+Cellule::Cellule() : enVie(false), fixe(false), x(0), y(0) {}
 
-void Cellule::initialize(const int x, const int y) {
+void Cellule::initialiser(const int x, const int y) {
     this->x = x;
     this->y = y;
 }
 
-void Cellule::setAlive(const bool status) {
-    if(!fixed) {
-        alive = status;
+void Cellule::definirVivant(const bool status) {
+    if(!fixe) {
+        enVie = status;
     }
 }
 
-bool Cellule::isAlive() const {
-    return alive;
+bool Cellule::estEnVie() const {
+    return enVie;
 }
 
-int Cellule::countNeighbors(const Grille* grid) const {
-    int count = 0;
+int Cellule::compterVoisins(const Grille* grille) const {
+    int compteur = 0;
     for(int i = -1; i <= 1; ++i) {
         for(int j = -1; j <= 1; ++j) {
             if(i == 0 && j == 0) {
@@ -32,16 +29,16 @@ int Cellule::countNeighbors(const Grille* grid) const {
             int x = this->x + i;
             int y = this->y + j;
 
-            if (grid->isToric()) {
-                x = (x + grid->getHeight()) % grid->getHeight();
-                y = (y + grid->getWidth()) % grid->getWidth();
+            if (grille->estTorique()) {
+                x = (x + grille->obtenirHauteur()) % grille->obtenirHauteur();
+                y = (y + grille->obtenirLargeur()) % grille->obtenirLargeur();
             }
 
-            if (x >= 0 && x < grid->getHeight() && y >= 0 && y < grid->getWidth()) {
-                count += grid->obtenirCellule(x, y).isAlive();
+            if (x >= 0 && x < grille->obtenirHauteur() && y >= 0 && y < grille->obtenirLargeur()) {
+                compteur += grille->obtenirCellule(x, y).estEnVie();
             }
         }
     }
 
-    return count;
+    return compteur;
 }

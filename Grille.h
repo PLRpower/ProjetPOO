@@ -4,15 +4,14 @@
 #include "Cellule.h"
 #include <vector>
 #include <string>
-#include <unordered_set>
 
 using namespace std;
 
 class Grille {
 private:
-    int width, height;
+    int largeur, hauteur;
     vector<Cellule> cellules;
-    bool toric;
+    bool torique;
 
 public:
     Grille() = default;
@@ -22,10 +21,10 @@ public:
     string grilleEnTexte();
     Cellule& obtenirCellule(int x, int y);
     const Cellule& obtenirCellule(int x, int y) const;
-    int getWidth() const { return width; }
-    int getHeight() const { return height; }
-    bool isToric() const { return toric; }
-    void setToric(const bool toric) { this->toric = toric; }
+    int obtenirLargeur() const { return largeur; }
+    int obtenirHauteur() const { return hauteur; }
+    bool estTorique() const { return torique; }
+    void definirTorique(const bool toric) { this->torique = toric; }
 };
 
 #endif // GRID_H

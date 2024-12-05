@@ -9,7 +9,7 @@ using namespace std;
 
 class AffichageConsole final : public Affichage {
 public:
-    void afficherGrille(const Grille& grid) override;
+    void afficherGrille(const Grille& grille) override;
 };
 
 
