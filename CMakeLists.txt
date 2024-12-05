@@ -15,16 +15,16 @@ add_executable(Projet main.cpp
         Cellule.h
         Grille.cpp
         Grille.h
-        GraphicDisplay.cpp
-        GraphicDisplay.h
-        File.cpp
-        File.h
+        AffichageGraphique.cpp
+        AffichageGraphique.h
+        Fichier.cpp
+        Fichier.h
         Grille.h
         JeuDeLaVie.cpp
         JeuDeLaVie.h
-        ConsoleDisplay.cpp
-        ConsoleDisplay.h
-        Display.h
+        AffichageConsole.cpp
+        AffichageConsole.h
+        Affichage.h
 )
 
 target_link_libraries(Projet sfml-graphics sfml-window sfml-system)

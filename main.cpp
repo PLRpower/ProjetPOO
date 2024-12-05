@@ -1,5 +1,4 @@
 #include <iostream>
-
 #include "JeuDeLaVie.h"
 
 using namespace std;

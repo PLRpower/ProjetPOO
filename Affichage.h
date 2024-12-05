@@ -8,9 +8,9 @@
 
 #include "Grille.h"
 
-class Display {
+class Affichage {
 public:
-    virtual ~Display() = default;
+    virtual ~Affichage() = default;
 
     virtual void afficherGrille(const Grille& grid) = 0;
 };
