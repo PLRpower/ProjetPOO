@@ -3,24 +3,20 @@
 
 #include <iostream>
 #include "Display.h"
-#include "Grid.h"
+#include "Grille.h"
 
 using namespace std;
 
 class ConsoleDisplay final : public Display {
 public:
-    void renderGrid(const Grid& grid) override {
+    void afficherGrille(const Grille& grid) override {
         for (int x = 0; x < grid.getHeight(); ++x) {
             for (int y = 0; y < grid.getWidth(); ++y) {
-                cout << grid.getCell(x, y).isAlive();
+                cout << grid.obtenirCellule(x, y).isAlive();
             }
             cout << endl;
         }
         cout << endl;
-    }
-
-    bool isGraphic() const override {
-        return false;
     }
 };
 

@@ -6,14 +6,13 @@
 #define DISPLAY_H
 
 
-#include "Grid.h"
+#include "Grille.h"
 
 class Display {
 public:
     virtual ~Display() = default;
 
-    virtual void renderGrid(const Grid& grid) = 0;
-    virtual bool isGraphic() const = 0;
+    virtual void afficherGrille(const Grille& grid) = 0;
 };
 
 #endif //DISPLAY_H

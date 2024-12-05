@@ -5,7 +5,7 @@
 #include <ctime>
 
 #include "Display.h"
-#include "Grid.h"
+#include "Grille.h"
 
 using namespace std;
 using namespace sf;
@@ -13,43 +13,27 @@ using namespace sf;
 class GraphicDisplay final : public Display {
 private:
     const int cellSize = 50;
-    RenderWindow& window;
+    RenderWindow* window;
 
 public:
-    explicit GraphicDisplay(RenderWindow& window) : window(window) {}
+    explicit GraphicDisplay(): window(nullptr) {}
 
-    void renderGrid(const Grid &grid) override {
-        window.clear();
+    void afficherGrille(const Grille &grid) override {
+        window->clear();
         RectangleShape shape(Vector2f(cellSize - 1, cellSize - 1));
 
         for (int x = 0; x < grid.getHeight(); ++x) {
             for (int y = 0; y < grid.getWidth(); ++y) {
                 shape.setPosition(y * cellSize, x * cellSize);
-                shape.setFillColor(grid.getCell(x, y).isAlive() ? Color::White : Color::Black);
-                window.draw(shape);
+                shape.setFillColor(grid.obtenirCellule(x, y).isAlive() ? Color::White : Color::Black);
+                window->draw(shape);
             }
         }
-        window.display();
+        window->display();
     }
 
-    bool isGraphic() const override {
-        return true;
-    }
-
-    RenderWindow& getWindow() const {
-        return window;
-    }
-
-    bool isRunning() const {
-        Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == Event::Closed) {
-                window.close();
-                return false;
-            }
-        }
-        return window.isOpen();
-    }
+    void setWindow(RenderWindow* window) {this->window = window;}
+    RenderWindow* getWindow() const {return window;}
 
 };
 

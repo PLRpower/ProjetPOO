@@ -1,32 +1,40 @@
 #ifndef JEUDELAVIE_H
 #define JEUDELAVIE_H
 
-#include <iostream>
 
 #include "ConsoleDisplay.h"
+#include "GraphicDisplay.h"
 #include "Display.h"
 #include "File.h"
-#include "GraphicDisplay.h"
-#include "Grid.h"
-#include "SFML/System/Sleep.hpp"
-#include "SFML/Window/Event.hpp"
-
-class GraphicDisplay;
-using namespace sf;
+#include "Grille.h"
+#include <filesystem>
 
 constexpr int cellSize = 50;
 
 class JeuDeLaVie {
 private:
     int mode;
-    Grid grid;
-    Display *display;
-    RenderWindow window;
-    int delai = 100;  // En ms
-    int nbGenerations = 0;  // Nombre de générations maximum
+    Grille grille;
+    Display *affichage;
+    RenderWindow fenetre;
+    File fichier;
+    int delai = 100;
+    int modifVisuel = 0;
+    int generation = 0;
+    int nbGenMax = 100;
+    unordered_set<string> grillePrecedentes;
+
 
 public:
     JeuDeLaVie() = default;
+
+    void choisirFichier() {
+        cout << "Choisissez le fichier d'entrée :" << endl;
+        string filename;
+        cin >> filename;
+        fichier.setInputFile(filename);
+        grille = fichier.getGrid();
+    }
 
     void choisirDelai() {
         cout << "Choisissez le délai entre chaque génération (en ms) :" << endl;
@@ -35,22 +43,12 @@ public:
 
     void choisirNbGenerations() {
         cout << "Choisissez le nombre de générations maximum (0 pour infini) :" << endl;
-        cin >> nbGenerations;
+        cin >> nbGenMax;
     }
 
     void choisirGrille() {
-        cout << "Choisissez la méthode de génération pour grille initiale :" << endl;
-        cout << "1. Générer aléatoirement" << endl;
-        cout << "2. Générer à partir d'un fichier" << endl;
-        int generation;
-        cin >> generation;
-
-        if (generation == 1) {
-            grid = Grid(10, 10);
-        } else {
-            const File file = File("C:/Users/pault/CLionProjects/ProjetPOO/input.txt");
-            grid = file.getGrid();
-        }
+        cout << "Voulez vous modifier les cases visuellement ? (1. Oui, 2. Non)" << endl;
+        cin >> modifVisuel;
     }
 
     void choisirMode() {
@@ -60,35 +58,51 @@ public:
         cin >> mode;
 
         if (mode == 1) {
-            display = new ConsoleDisplay();
+            affichage = new ConsoleDisplay();
         } else {
-            window.create(VideoMode(grid.getWidth() * cellSize, grid.getHeight() * cellSize), "Jeu de la vie");
-            display = new GraphicDisplay(window);
+            fenetre.create(VideoMode(grille.getWidth() * cellSize, grille.getHeight() * cellSize), "Jeu de la vie");
+            affichage = new GraphicDisplay();
+            GraphicDisplay* graphicDisplay = dynamic_cast<GraphicDisplay*>(affichage);
+            graphicDisplay->setWindow(&fenetre);
         }
     }
 
+    void choisirTorique() {
+        cout << "La grille est-elle torique ? (1. Oui, 2. Non)" << endl;
+        int torique;
+        cin >> torique;
+        grille.setToric(torique == 1);
+    }
+
     void start() {
-        while(true) {
+        fichier.creerDossierSortie();
+
+        while (generation < nbGenMax || nbGenMax == 0) {
             if(mode == 2) {
-                if(!window.isOpen()) {
-                    break;
-                }
                 Event event;
-                while (window.pollEvent(event)) {
-                    if (event.type == Event::Closed) {
-                       window.close();
-                       break;
+                while(fenetre.pollEvent(event)) {
+                    if(event.type == Event::Closed) {
+                        break;
                     }
                 }
-            } else {
-
             }
 
-            display->renderGrid(grid);
+            affichage->afficherGrille(grille);
+
+            fichier.ecrireFichier(grille, generation);
+
+            grille.actualiser();
+
+            if(grillePrecedentes.contains(grille.grilleEnTexte())) {
+                cout << "La grille se repète, fin de la simulation." << endl;
+                break;
+            }
+
+            grillePrecedentes.insert(grille.grilleEnTexte());
+
+            ++generation;
 
             sleep(milliseconds(delai));
-
-            grid.update();
         }
     }
 };
