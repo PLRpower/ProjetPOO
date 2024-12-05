@@ -48,7 +48,7 @@ public:
         if (generation == 1) {
             grid = Grid(10, 10);
         } else {
-            const File file = File("C:/Users/pault/CLionProjects/ProjetPOO/input.txt");
+            const File file = File("C:/Users/nicol/CLionProjects/ProjetPOO/input.txt");
             grid = file.getGrid();
         }
     }
