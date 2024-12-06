@@ -1,4 +1,5 @@
-    ```mermaid 
+```mermaid 
+
     classDiagram
     class JeuDeLaVie {
     -mode: int
@@ -88,4 +89,4 @@
         JeuDeLaVie o-- Grille
         JeuDeLaVie o-- Affichage
         JeuDeLaVie o-- Fichier
-    ```
+```
