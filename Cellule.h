@@ -5,20 +5,18 @@ class Grille;
 
 class Cellule {
 private:
-    bool enVie, nextState, fixe;
+    bool enVie, etatSuivant, fixe;
     int x, y;
 
 public:
-    Cellule();
-    void initialiser(int x, int y);
-    void definirVivant(bool status);
-    bool estEnVie() const;
-    int obtenirX() const { return x; }
-    int obtenirY() const { return y; }
-    void definirFixe(const bool fixed) { this->fixe = fixed; }
-    int compterVoisins(const Grille* grille) const;
-    bool obtenirEtatSuivant() const { return nextState; }
-    void mettreEtatSuivant(const bool nextState) { this->nextState = nextState; }
+    Cellule();  // Constructeur par défaut
+    void initialiser(int x, int y);  // Initialise la cellule
+    void definirVivant(bool status);  // Définit le statut de la cellule
+    bool estEnVie() const;  // Retourne le statut de la cellule
+    void definirObstacle(const bool fixe) { this->fixe = fixe; }  // Définit si la cellule est fixe
+    int compterVoisins(const Grille* grille) const;  // Compte le nombre de voisins vivants
+    bool obtenirEtatSuivant() const { return etatSuivant; }  // Retourne l'état suivant
+    void mettreEtatSuivant(const bool nextState) { this->etatSuivant = nextState; }  // Définit l'état suivant
 };
 
 

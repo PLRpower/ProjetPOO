@@ -14,17 +14,17 @@ private:
     bool torique;
 
 public:
-    Grille() = default;
-    Grille(int largeur, int hauteur);
-    void definirTaille(int largeur, int hauteur);
-    void actualiser();
-    string grilleEnTexte();
-    Cellule& obtenirCellule(int x, int y);
-    const Cellule& obtenirCellule(int x, int y) const;
-    int obtenirLargeur() const { return largeur; }
-    int obtenirHauteur() const { return hauteur; }
-    bool estTorique() const { return torique; }
-    void definirTorique(const bool toric) { this->torique = toric; }
+    Grille() = default;  // Constructeur par défaut
+    Grille(int largeur, int hauteur);  // Constructeur
+    void genererAleatoire();  // Génère une grille aléatoire
+    void actualiser();  // Actualise la grille
+    string grilleEnTexte();  // Retourne la grille en texte
+    Cellule& obtenirCellule(int x, int y);  // Retourne une cellule modifiable
+    const Cellule& obtenirCellule(int x, int y) const;  // Retourne une cellule constante (non-modifiable)
+    int obtenirLargeur() const { return largeur; }  // Retourne la largeur
+    int obtenirHauteur() const { return hauteur; }  // Retourne la hauteur
+    bool estTorique() const { return torique; }  // Retourne si la grille est torique
+    void definirTorique(const bool toric) { this->torique = toric; }  // Définit si la grille est torique
 };
 
 #endif // GRID_H

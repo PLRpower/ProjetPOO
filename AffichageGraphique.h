@@ -10,16 +10,15 @@
 using namespace std;
 using namespace sf;
 
-class AffichageGraphique final : public Affichage {
+class AffichageGraphique final : public Affichage {  // Classe héritée de Affichage
 private:
-    const int cellSize = 50;
-    RenderWindow* fenetre;
+    int cellSize;  // Taille d'une cellule
+    RenderWindow fenetre;  // Fenêtre d'affichage
 
 public:
-    explicit AffichageGraphique();
-    void afficherGrille(const Grille &grille) override;
-    void definirFenetre(RenderWindow* fenetre);
-    RenderWindow* obtenirFenetre() const;
+    explicit AffichageGraphique(int largeur, int hauteur);  // Constructeur par défaut
+    void afficherGrille(const Grille &grille) override;  // Affiche la grille
+    RenderWindow* obtenirFenetre() override;  // Obtenir la fenêtre
 };
 
 #endif // GRAPHICDISPLAY_H

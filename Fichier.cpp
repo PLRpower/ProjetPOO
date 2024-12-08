@@ -2,51 +2,60 @@
 #include <iostream>
 #include <fstream>
 
-void Fichier::definirFichierEntree(const string& filename) {
-    this->fichierEntree = filename;
-    ifstream file(filename);
-    if(!file.is_open()) {
-        throw runtime_error("Impossible d'ouvrir le fichier");
+void Fichier::definirFichierEntree(const string& nomFichier) {
+    this->fichierEntree = nomFichier;  // Définit le fichier d'entrée
+    ifstream file(nomFichier);  // Ouvre le fichier
+    if(!file.is_open()) {  // Si le fichier n'est pas ouvert
+        throw runtime_error("Impossible d'ouvrir le fichier");  // Lève une exception
     }
 }
 
 void Fichier::creerDossierSortie() {
-    const string fileNameWithoutExtension = fichierEntree.substr(0, fichierEntree.find_last_of('.'));
-    dossierSortie = fileNameWithoutExtension + "_out";
-    if(exists(dossierSortie)) {
-        remove_all(dossierSortie);
+    const string fileNameWithoutExtension = fichierEntree.substr(0, fichierEntree.find_last_of('.'));  // Nom du fichier sans extension
+    dossierSortie = fileNameWithoutExtension + "_out";  // Nom du dossier de sortie
+    if(exists(dossierSortie)) {  // Si le dossier existe
+        remove_all(dossierSortie);  // Supprime le dossier et son contenu
     }
-    create_directory(dossierSortie);
-}
-
-void Fichier::ecrireFichier(const Grille& grid, const int generation) const {
-    const string filename = dossierSortie + "/" + to_string(generation) + ".txt";
-    ofstream file(filename);
-    file << grid.obtenirHauteur() << " " << grid.obtenirLargeur() << endl;
-    for (int x = 0; x < grid.obtenirHauteur(); ++x) {
-        for (int y = 0; y < grid.obtenirLargeur(); ++y) {
-            file << grid.obtenirCellule(x, y).estEnVie() << " ";
-        }
-        file << endl;
-    }
-    file.close();
+    create_directory(dossierSortie);  // Crée le dossier
 }
 
 Grille Fichier::obtenirGrille() const {
-    ifstream file(fichierEntree);
+    ifstream file(fichierEntree);  // Ouvre le fichier
 
-    int height = 0, width = 0;
-    file >> height >> width;
+    int hauteur, largeur;  // Hauteur et largeur de la grille
+    file >> hauteur >> largeur;  // Lit la hauteur et la largeur
 
-    Grille grid = Grille(width, height);
-    for (int x = 0; x < height; ++x) {
-        for (int y = 0; y < width; ++y) {
-            int value;
-            file >> value;
-            grid.obtenirCellule(x, y).definirVivant(value);
+    Grille grid = Grille(largeur, hauteur);  // Crée une grille
+    for (int x = 0; x < hauteur; ++x) {  // Parcourir les lignes
+        for (int y = 0; y < largeur; ++y) {  // Parcourir les colonnes
+            int value;  // Valeur de la cellule
+            file >> value;  // Lit la valeur
+            if(value == 3 || value == 1) {  // Si la valeur est 3 ou 1
+                grid.obtenirCellule(x, y).definirVivant(true);  // Définit la cellule comme vivante
+            } else {
+                grid.obtenirCellule(x, y).definirVivant(false);  // Définit la cellule comme morte
+            }
+            if(value == 2 || value == 3) {  // Si la valeur est 2 ou 3
+                grid.obtenirCellule(x, y).definirObstacle(true);  // Définit la cellule comme obstacle
+            } else {
+                grid.obtenirCellule(x, y).definirObstacle(false);  // Définit la cellule comme non obstacle
+            }
         }
     }
 
-    file.close();
-    return grid;
+    file.close();  // Ferme le fichier
+    return grid;  // Retourne la grille
+}
+
+void Fichier::ecrireFichier(const Grille& grille, const int generation) const {
+    const string nomFichier = dossierSortie + "/" + to_string(generation) + ".txt";  // Nom du fichier
+    ofstream file(nomFichier);  // Ouvre le fichier
+    file << grille.obtenirHauteur() << " " << grille.obtenirLargeur() << endl;  // Écrit la hauteur et la largeur
+    for (int x = 0; x < grille.obtenirHauteur(); ++x) {  // Parcourir les lignes
+        for (int y = 0; y < grille.obtenirLargeur(); ++y) {  // Parcourir les colonnes
+            file << grille.obtenirCellule(x, y).estEnVie() << " ";  // Écrit le statut de la cellule
+        }
+        file << endl;  // Saut de ligne
+    }
+    file.close();  // Ferme le fichier
 }

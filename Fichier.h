@@ -10,15 +10,15 @@ using namespace filesystem;
 
 class Fichier {
 private:
-    string fichierEntree;
-    string dossierSortie;
+    string fichierEntree;  // Nom du fichier d'entrée
+    string dossierSortie;  // Nom du dossier de sortie
 
 public:
-    explicit Fichier() = default;
-    void definirFichierEntree(const string& filename);
-    void creerDossierSortie();
-    void ecrireFichier(const Grille& grid, int generation) const;
-    Grille obtenirGrille() const;
+    explicit Fichier() = default;  // Constructeur par défaut
+    void definirFichierEntree(const string& nomFichier);  // Définit le fichier d'entrée
+    void creerDossierSortie();  // Crée le dossier de sortie
+    void ecrireFichier(const Grille& grille, int generation) const;  // Écrit le fichier
+    Grille obtenirGrille() const;  // Obtenir la grille
 };
 
 #endif // FILE_H
