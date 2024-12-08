@@ -89,7 +89,7 @@ void JeuDeLaVie::start() {
     fichier.creerDossierSortie();  // Crée le dossier de sortie
 
     while (generation < nbGenMax || nbGenMax == 0) {  // Tant que la génération est inférieure au nombre de générations maximum
-        if(fenetre->isOpen()) {  // Si on est en mode graphique
+        if(modeAffichage == 2) {  // Si on est en mode graphique
             if(verifierFermetureFenetre()) {  // Si la fenêtre est fermée
                 break;  // Arrête la simulation
             }
@@ -101,7 +101,8 @@ void JeuDeLaVie::start() {
 
         grille.actualiser();  // Actualise la grille
 
-        if(grillePrecedentes.contains(grille.grilleEnTexte())) {  // Si la grille actualisée est déjà présente dans les grilles précédentes
+        // Alternative pour contains
+        if(grillePrecedentes.find(grille.grilleEnTexte()) != grillePrecedentes.end()) {  // Si la grille actualisée est déjà présente dans les grilles précédentes
             cout << "La grille se repète, fin de la simulation." << endl;
             break;  // Arrête la simulation
         }
@@ -113,9 +114,11 @@ void JeuDeLaVie::start() {
         sleep(milliseconds(delai));  // Attend le délai
     }
 
-    while (fenetre->isOpen()) {  // Tant que la fenêtre est ouverte
-        if (verifierFermetureFenetre()) {  // Si la fenêtre est fermée
-            break;  // Arrête la simulation
+    if(modeAffichage == 2) {
+        while (fenetre->isOpen()) {  // Tant que la fenêtre est ouverte
+            if (verifierFermetureFenetre()) {  // Si la fenêtre est fermée
+                break;  // Arrête la simulation
+            }
         }
     }
 }
