@@ -14,7 +14,6 @@ Grille::Grille(const int largeur, const int hauteur) : largeur(largeur), hauteur
 }
 
 void Grille::actualiser() {
-    // Parallelisation
     #pragma omp parallel for  // Parallélisation de la boucle, uniquement fonctionnel si les itérations sont indépendantes
     for (Cellule& cellule : cellules) {  // Parcourir les cellules
         const int neighbors = cellule.compterVoisins(this);  // Compte le nombre de voisins vivants

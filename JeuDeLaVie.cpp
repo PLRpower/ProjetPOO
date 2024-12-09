@@ -1,4 +1,6 @@
 #include "JeuDeLaVie.h"
+
+#include <cassert>
 #include <iostream>
 
 #include "AffichageConsole.h"
@@ -127,15 +129,10 @@ bool JeuDeLaVie::testUnitaire() {
     Fichier fichier;
     fichier.definirFichierEntree("testUnitaire-initial.txt");  // Définit le fichier d'entrée
     Grille grille = fichier.obtenirGrille();  // Obtient la grille
-    if(grille.obtenirHauteur() != 25 || grille.obtenirLargeur() != 25) {  // Si la hauteur ou la largeur de la grille est différente de 25
-        return false;  // Retourne faux
-    }
-    if(grille.obtenirCellule(0, 0).estEnVie()) {  // Si la cellule (0, 0) est vivante
-        return false;  // Retourne faux
-    }
-    if(!grille.obtenirCellule(0, 1).estEnVie()) {  // Si la cellule (0, 1) est morte
-        return false;  // Retourne faux
-    }
+    assert(grille.obtenirHauteur() == 25);  // Vérifie que la hauteur de la grille est de 25
+    assert(grille.obtenirLargeur() == 25);  // Vérifie que la largeur de la grille est de 25
+    assert(grille.obtenirCellule(0, 0).estEnVie() == false);  // Vérifie que la cellule (0, 0) est morte
+    assert(grille.obtenirCellule(0, 1).estEnVie() == true);  // Vérifie que la cellule (0, 1) est vivante
     generation = 0;  // Génération actuelle
     nbGenMax = 5;  // Nombre de générations maximum
     while(generation < nbGenMax) {  // Tant que la génération est inférieure au nombre de générations maximum
@@ -144,10 +141,6 @@ bool JeuDeLaVie::testUnitaire() {
     }
     fichier.definirFichierEntree("testUnitaire-final.txt");  // Définit le fichier d'entrée
     Grille grilleTest = fichier.obtenirGrille();  // Obtient la grille
-    if(grille.grilleEnTexte() != grilleTest.grilleEnTexte()) {  // Si la grille actuelle est différente de la grille de test
-        cout << "Erreur de grille" << endl;
-        return false;  // Retourne faux
-    }
-
+    assert(grille.grilleEnTexte() == grilleTest.grilleEnTexte());  // Vérifie que la grille actuelle est égale à la grille de test
     return true;  // Si tout est bon, retourne vrai
 }

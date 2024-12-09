@@ -9,7 +9,7 @@ void Cellule::initialiser(const int x, const int y) {  // Initialise la cellule
 }
 
 void Cellule::definirVivant(const bool status) {
-    if(!fixe) {  // Si la cellule n'est pas fixe
+    if(!fixe) {  // Si la cellule n'est pas fixe (obstacle)
         enVie = status;  // Définit le statut de la cellule
     }
 }
@@ -39,6 +39,5 @@ int Cellule::compterVoisins(const Grille* grille) const {
             }
         }
     }
-
     return compteur;  // Retourne le nombre de voisins vivants
 }

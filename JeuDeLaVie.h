@@ -15,7 +15,7 @@ private:
     Affichage *affichage;  // Affichage
     Fichier fichier;  // Fichier
     int delai;  // Délai entre chaque génération
-    int generation;  // Génération actuelle
+    int generation = 0;  // Génération actuelle
     int nbGenMax;  // Nombre de générations maximum
     unordered_set<string> grillePrecedentes;  // Grilles précédentes
     bool verifierFermetureFenetre() const;  // Vérifie la fermeture de la fenêtre

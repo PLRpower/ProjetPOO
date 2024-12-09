@@ -4,8 +4,8 @@
 
 void Fichier::definirFichierEntree(const string& nomFichier) {
     this->fichierEntree = nomFichier;  // Définit le fichier d'entrée
-    ifstream file(nomFichier);  // Ouvre le fichier
-    if(!file.is_open()) {  // Si le fichier n'est pas ouvert
+    ifstream fichier(nomFichier);  // Ouvre le fichier
+    if(!fichier.is_open()) {  // Si le fichier n'est pas ouvert
         throw runtime_error("Impossible d'ouvrir le fichier");  // Lève une exception
     }
 }
